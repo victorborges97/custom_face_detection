@@ -1,1 +1,1 @@
-# custom_face_detection
+- Repositório da lib: https://github.com/justadudewhohacks/face-api.js
