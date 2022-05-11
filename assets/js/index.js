@@ -21,39 +21,39 @@ const startVideo = () => {
         })
 }
 
-Promise.all([
-    faceapi.nets.tinyFaceDetector.loadFromUri('/assets/lib/face-api/models'),
-    faceapi.nets.faceLandmark68Net.loadFromUri('/assets/lib/face-api/models'),
-    faceapi.nets.faceRecognitionNet.loadFromUri('/assets/lib/face-api/models'),
-    faceapi.nets.faceExpressionNet.loadFromUri('/assets/lib/face-api/models'),
-    faceapi.nets.ageGenderNet.loadFromUri('/assets/lib/face-api/models'),
-    faceapi.nets.ssdMobilenetv1.loadFromUri('/assets/lib/face-api/models'),
+Promise.all([ // Retorna uma promisse quando todas já estiverem resolvidas
+    faceapi.nets.tinyFaceDetector.loadFromUri('/assets/lib/face-api/models'),   // É igual uma detecção facial normal, porém menor e mais rapido.
+    faceapi.nets.faceLandmark68Net.loadFromUri('/assets/lib/face-api/models'),  // Pega os pontos de referencia do sue rosto.
+    faceapi.nets.faceRecognitionNet.loadFromUri('/assets/lib/face-api/models'), // Vai permitir a api saber onde o rosto está localizado no video.
+    faceapi.nets.faceExpressionNet.loadFromUri('/assets/lib/face-api/models'),  // Vai permitir a api saber suas expressões.
+    faceapi.nets.ageGenderNet.loadFromUri('/assets/lib/face-api/models'),       // Vai permitir a api calcular sua idade.
+    faceapi.nets.ssdMobilenetv1.loadFromUri('/assets/lib/face-api/models'),     // Especificar o detector de rosto passando o objeto de opções.
 ]).then(startVideo)
 
 cam.addEventListener('play', async () => {
-    const canvas = faceapi.createCanvasFromMedia(cam)
-    const canvasSize = {
+    const canvas = faceapi.createCanvasFromMedia(cam)   // Criando canvas para mostrar nossos resultador.
+    const canvasSize = {    // criando tamanho do display a partir das dimenssões da nossa cam.
         width: cam.width,
         height: cam.height
     }
-    faceapi.matchDimensions(canvas, canvasSize)
+    faceapi.matchDimensions(canvas, canvasSize) // Igualando as dimensões do canvas com da cam.
     document.body.appendChild(canvas)
-    setInterval(async () => {
+    setInterval(async () => {        // Intervalo para detectar os rostos a cada 100ms.
         const detections = await faceapi
             .detectAllFaces(
                 cam,
-                new faceapi.TinyFaceDetectorOptions()
+                new faceapi.TinyFaceDetectorOptions() // Qual tipo de biblioteca vamos usar para detectar os rostos.
             )
-            .withFaceLandmarks()
-            .withFaceExpressions()
-            .withAgeAndGender()
+            .withFaceLandmarks()    // Vai desenhar os pontos de marcação no rosto.
+            .withFaceExpressions()  // Vai determinar nossas expressões.
+            .withAgeAndGender()     // Vai determinar idade.
 
         const resizedDetections = faceapi.resizeResults(detections, canvasSize)
 
         canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-        faceapi.draw.drawDetections(canvas, resizedDetections)
-        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-        faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
+        faceapi.draw.drawDetections(canvas, resizedDetections)      // Desenhando decções.
+        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)   // Desenhando os pontos de referencia.
+        faceapi.draw.drawFaceExpressions(canvas, resizedDetections) // Desenhando expressões.
 
         resizedDetections.forEach(detection => {
             console.log("detection", detection);
