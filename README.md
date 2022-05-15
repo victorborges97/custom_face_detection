@@ -1,1 +1,0 @@
-- Repositório da lib: https://github.com/justadudewhohacks/face-api.js
