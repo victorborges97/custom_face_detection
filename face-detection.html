@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Video | Reconhecimento Facial com FaceAPI</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style/face-detection.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src='./lib/face-api/face-api.min.js'></script>
+        <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+        <main>
+                <div class="container mt-1">
+                        <div class="row">
+                                <div class="col-12 col-md-4 col-xl-3 align-top">
+                                        <div class="row mb-3">
+                                                <div class="col-md-10 col-6 form-control">
+                                                        <label class="form-switch">
+                                                                <input type="checkbox" id="webcam-switch">
+                                                                <i></i> Webcam </label>
+                                                        <button id="cameraFlip" class="btn d-none"></button>
+                                                </div>
+                                                <div class="col-md-10 col-6 form-control">
+                                                        <label class="form-switch disabled">
+                                                                <input type="checkbox" disabled id="detection-switch">
+                                                                <i></i> Detect Face </label>
+                                                </div>
+                                                <div class="col-md-10 col-6 form-control">
+                                                        <label class="form-switch disabled">
+                                                                <input type="checkbox" disabled id="box-switch">
+                                                                <i></i> Bounding Box </label>
+                                                </div>
+                                                <div class="col-md-10 col-6 form-control">
+                                                        <label class="form-switch disabled">
+                                                                <input type="checkbox" disabled id="landmarks-switch">
+                                                                <i></i> Landmarks </label>
+                                                </div>
+                                                <div class="col-md-10 col-6 form-control">
+                                                        <label class="form-switch disabled">
+                                                                <input type="checkbox" disabled id="expression-switch">
+                                                                <i></i> Expression </label>
+                                                </div>
+                                                <div class="col-md-10 col-6 form-control">
+                                                        <label class="form-switch disabled">
+                                                                <input type="checkbox" disabled id="age-gender-switch">
+                                                                <i></i> Age & Gender </label>
+                                                </div>
+                                                <div class="col-md-10 col-6 mt-2 d-flex" id="button_print">
+
+                                                </div>
+                                        </div>
+                                </div>
+                                <div class="col-12 col-md-8 col-xl-9 align-top" id="webcam-container">
+                                        <div class="loading d-none">
+                                                Carregando...
+                                                <div class="spinner-border" role="status">
+                                                        <span class="sr-only"></span>
+                                                </div>
+                                        </div>
+
+                                        <div id="video-container">
+                                                <video id="webcam" autoplay muted playsinline></video>
+                                        </div>
+                                        <div id="errorMsg" class="col-12 alert-danger d-none">
+                                                Falha ao iniciar a câmera <br>
+                                                1. Por favor, permita permissão para acessar a câmera. <br>
+                                                2. Se você estiver navegando pelas mídias sociais em navegadores
+                                                integrados, procure por
+                                                o ícone ... ou do navegador no canto superior/inferior direito e abra o
+                                                página em Sarafi (iPhone)/Chrome (Android)
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </main>
+        <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="d-flex">
+                                <p>Sua foto!</p>
+                        </div>
+                        <div id="outputImage"></div>
+                </div>
+
+        </div>
+        <script src="js/face-detection.js"></script>
+</body>
+
+</html>
